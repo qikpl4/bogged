@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/full_data.yml
+  workflow_dispatch:
+
+jobs:
+  full_data:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Install Hugging Face CLI"
+        run: |
+          curl -LsSf https://hf.co/cli/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - run: hf auth whoami
+        env:
+          HF_TOKEN: "${{secrets.HF_TOKEN}}"
+      - uses: actions/checkout@v7
+      - run: mkdir -p inputs/mojmap www/public/data
+      - run: git clone https://github.com/FabricMC/yarn.git inputs/yarn
+      - run: git clone https://github.com/FabricMC/intermediary.git inputs/intermediary
+      - run: python scripts/download-mojmap/main.py -i scripts/download-mojmap/all-mojmap.txt inputs/mojmap
+      - run: python scripts/builder/main.py --yarn-repo inputs/yarn --intermediary-repo inputs/intermediary --mojmap-dir inputs/mojmap --output data
+      - run: hf buckets sync ./data hf://buckets/qikp/bogged-all-mojmap --delete
+        env:
+          HF_TOKEN: "${{secrets.HF_TOKEN}}"
