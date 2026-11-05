@@ -55,6 +55,16 @@ migrateMappings is designed to migrate an entire codebase at once. Bogged serves
 
 There are workloads where Bogged would make more sense, such as checking one or two mappings during an audit or to prove a point. migrateMappings just isn't built for that.
 
+## Hosted data
+
+Hosted data for popular versions is available under this base URL:
+
+```
+https://qikpl4.github.io/bogged/data
+```
+
+This is also the data used by default in the web tool.
+
 ## Experimental: full data
 
 In case the curated versions built by GitHub every push don't suit your needs, an experimental and best-effort bucket can be used containing the data for every possible version.
