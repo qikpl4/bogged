@@ -145,16 +145,38 @@ def parse_yarn_text(text: str, origin: str = "<yarn>") -> tuple[list[ClassEntry]
     return classes, members
 
 
+def _git_stdout(repo: Path, *args: str) -> str:
+    result = subprocess.run(
+        ["git", "-C", str(repo), *args],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    if result.returncode != 0:
+        return ""
+    return result.stdout.decode("utf-8", errors="replace")
+
+
+def _ref_exists(repo: Path, ref: str) -> bool:
+    result = subprocess.run(
+        ["git", "-C", str(repo), "cat-file", "-e", f"{ref}^{{commit}}"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return result.returncode == 0
+
+
 def yarn_ref_for_version(repository: str | Path, version: str) -> str | None:
     repo = Path(repository)
-    for ref in (f"refs/heads/{version}", f"refs/tags/{version}"):
-        result = subprocess.run(
-            ["git", "-C", str(repo), "cat-file", "-e", f"{ref}^{{commit}}"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
-        if result.returncode == 0:
+    candidates = [f"refs/heads/{version}", f"refs/tags/{version}"]
+    # A plain clone only keeps a local branch for the default version; the rest
+    # live in remote-tracking refs, so probe those too (origin first).
+    remotes = _git_stdout(repo, "remote").split()
+    remotes.sort(key=lambda remote: remote != "origin")
+    candidates.extend(f"refs/remotes/{remote}/{version}" for remote in remotes)
+    for ref in candidates:
+        if _ref_exists(repo, ref):
             return ref
     return None
 

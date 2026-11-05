@@ -1,0 +1,13 @@
+/*
+
+!/README.md
+!/src
+!/scripts
+!/.gitignore
+!/www/
+!/LICENSE
+
+__pycache__/
+
+versions.json
+*.bin.gz

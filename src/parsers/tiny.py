@@ -4,8 +4,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import logging
 
 from .descriptor import DescriptorError, normalize_jvm_descriptor
+
+logger = logging.getLogger(__name__)
 
 
 class TinyParseError(ValueError):
@@ -85,4 +88,5 @@ def parse_tiny(path: str | Path) -> TinyMapping:
     except UnicodeDecodeError as error:
         raise TinyParseError(f"{tiny_path}: not a UTF-8 tiny mapping file") from error
 
+    logger.debug("%s: parsed %d classes and %d members", tiny_path, len(classes), len(members))
     return TinyMapping(classes=tuple(classes), members=tuple(members))

@@ -1,0 +1,155 @@
+/* Minimal extras on top of Pico CSS */
+
+.side-picker {
+  border: none;
+  padding: 0;
+  margin-bottom: var(--pico-spacing);
+}
+.side-picker legend {
+  padding: 0;
+  margin-bottom: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--pico-muted-color);
+}
+.side-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.side-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  cursor: pointer;
+}
+.side-options label:has(input:checked) {
+  border-color: var(--pico-primary);
+  background: color-mix(in srgb, var(--pico-primary) 12%, transparent);
+}
+.side-options input {
+  margin: 0;
+}
+
+.query-grid {
+  grid-template-columns: minmax(9rem, 1fr) minmax(14rem, 3fr);
+}
+
+.action-row > button[type="submit"] {
+  width: auto;
+  margin: 0;
+}
+
+.settings {
+  margin-top: var(--pico-spacing);
+}
+.settings-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--pico-spacing);
+  align-items: end;
+  padding: var(--pico-spacing);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: color-mix(in srgb, var(--pico-muted-color) 6%, transparent);
+}
+.settings-panel label {
+  margin: 0;
+}
+.settings-panel label[for="base-url"] {
+  grid-column: 1 / -1;
+}
+.settings-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
+.settings-footer button {
+  width: auto;
+  margin: 0;
+}
+
+.progress-area {
+  margin-top: var(--pico-spacing);
+}
+.progress-area progress {
+  width: 100%;
+  margin-bottom: 0.35rem;
+}
+
+.error {
+  border-left: 4px solid var(--pico-del-color, #d32f2f);
+  padding: 0.75rem 1rem;
+  margin-top: var(--pico-spacing);
+  white-space: pre-wrap;
+}
+
+.results-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: var(--pico-spacing);
+}
+.results-head h2 {
+  margin: 0;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+#results-table {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+#results-table td,
+#results-table th {
+  vertical-align: top;
+}
+#results-table code {
+  font-size: 0.8em;
+  word-break: break-all;
+}
+.cell-name {
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-weight: 600;
+}
+.cell-owner {
+  display: block;
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-size: 0.75rem;
+  color: var(--pico-muted-color);
+  word-break: break-all;
+}
+.cell-absent {
+  color: var(--pico-muted-color);
+}
+.kind-badge {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--pico-border-radius);
+  border: 1px solid var(--pico-muted-border-color);
+  font-size: 0.75rem;
+  font-family: var(--pico-font-family-monospace, monospace);
+}
+
+/* Highlight the column of the side used for the search */
+#results-table[data-active-side="mojmap"] [data-side="mojmap"],
+#results-table[data-active-side="yarn"] [data-side="yarn"],
+#results-table[data-active-side="intermediary"] [data-side="intermediary"] {
+  background: color-mix(in srgb, var(--pico-primary) 10%, transparent);
+}
+
+.truncated-note {
+  margin: 0.35rem 0 0;
+  padding: 0.4rem 0.7rem;
+  border-left: 4px solid var(--pico-primary);
+  background: color-mix(in srgb, var(--pico-primary) 10%, transparent);
+  border-radius: var(--pico-border-radius);
+  font-size: 0.85rem;
+}

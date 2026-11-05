@@ -4,9 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import logging
 import re
 
 from .descriptor import DescriptorError, field_descriptor, method_descriptor
+
+logger = logging.getLogger(__name__)
 
 ClassLine = re.compile(r"^(?P<source>[^\s:][^:]*) -> (?P<target>[^:]+):$")
 MemberPrefix = re.compile(r"^\s+(?:\d+:\d+:)?")
@@ -171,6 +174,7 @@ def parse_proguard(path: str | Path) -> ProGuardMapping:
                     descriptor=descriptor,
                 )
             )
+        logger.debug("%s: parsed %d classes and %d members", mapping_path, len(classes), len(members))
         return ProGuardMapping(classes=tuple(classes), members=tuple(members))
     except UnicodeDecodeError as error:
         raise ProGuardParseError(f"{mapping_path}: not a UTF-8 ProGuard mapping file") from error
