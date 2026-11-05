@@ -54,7 +54,7 @@ In case the curated versions built by GitHub every push don't suit your needs, a
 
 They are hosted using slower technology and can break at any time.
 
-Simply set your base URL to this:
+If you want to use it, set your base URL to this:
 
 ```
 https://huggingface.co/buckets/qikp/bogged-all-mojmap/resolve
