@@ -35,6 +35,13 @@
         <label for="query" class="query-field">Name
           <input id="query" name="query" type="text" placeholder="e.g. Level, getBlockState, class_1937" spellcheck="false" autocapitalize="off" required>
         </label>
+        <label for="match-mode">Name match
+            <select id="match-mode" name="match-mode">
+              <option value="exact">Exact</option>
+              <option value="prefix" selected="">Prefix</option>
+              <option value="contains">Contains</option>
+            </select>
+        </label>
       </div>
 
       <div class="action-row">
@@ -42,18 +49,11 @@
       </div>
 
       <details class="settings" id="settings">
-        <summary>Settings</summary>
+        <summary>Advanced</summary>
         <div class="settings-panel">
           <label for="base-url">Base data URL
             <input id="base-url" name="base-url" type="text" value="data" spellcheck="false" autocapitalize="off" aria-describedby="base-url-hint">
             <small id="base-url-hint">Where <code>versions.json</code> and the per-version folders live. Applied on change.</small>
-          </label>
-          <label for="match-mode">Name match
-            <select id="match-mode" name="match-mode">
-              <option value="exact">Exact</option>
-              <option value="prefix" selected>Prefix</option>
-              <option value="contains">Contains</option>
-            </select>
           </label>
           <div class="settings-footer">
             <button type="button" id="clear-cache" class="secondary outline">Clear cached files</button>
