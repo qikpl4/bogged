@@ -41,3 +41,9 @@ npm run build
 Notably, something out of scope for this project is storing obfuscated names. These can already be obtained trivially through Intermediary, and writing a separate tool to convert between obfuscated and Intermediary is a better choice.
 
 Two tools with a nice interface is still better than manually dealing with multiple text files.
+
+## Why not Loom's migrateMappings?
+
+migrateMappings is designed to migrate an entire codebase at once. Bogged serves a different purpose: quick, ad-hoc and efficient lookup.
+
+There are workloads where Bogged would make more sense, such as checking one or two mappings during an audit or to prove a point. migrateMappings just isn't built for that.
