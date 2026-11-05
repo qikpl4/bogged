@@ -24,6 +24,7 @@ jobs:
       - run: git clone https://github.com/FabricMC/intermediary.git inputs/intermediary
       - run: python scripts/download-mojmap/main.py -i scripts/download-mojmap/golden.txt inputs/mojmap
       - run: python scripts/builder/main.py --yarn-repo inputs/yarn --intermediary-repo inputs/intermediary --mojmap-dir inputs/mojmap --output www/public/data
+      - run: python cli/main.py --base-url file://$(pwd)/www/public/data --side yarn --version 1.21.11 maintainPrecision
       - run: cd www && npm ci && npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
