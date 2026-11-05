@@ -1,4 +1,4 @@
-/* Mapping Lookup — static viewer for the packed binary mapping format.
+/* Static viewer for the packed binary mapping format.
  *
  * Layout (all little-endian, gzip-compressed unless noted):
  *   index_<side>.bin.gz : u16 side mask, then entries of
@@ -28,25 +28,24 @@ const textDecoder = new TextDecoder();
 const indexFile = (side) => `index_${side}.bin.gz`;
 const batchFile = (chunk) => `batch_${String(chunk).padStart(3, '0')}.bin.gz`;
 
-const $ = (selector) => document.querySelector(selector);
-const form = $('#lookup-form');
-const versionSelect = $('#version');
-const queryInput = $('#query');
-const baseUrlInput = $('#base-url');
-const matchModeSelect = $('#match-mode');
-const maxResultsInput = $('#max-results');
-const lookupButton = $('#lookup-button');
-const clearCacheButton = $('#clear-cache');
-const progressArea = $('#progress-area');
-const progressEl = $('#progress');
-const progressText = $('#progress-text');
-const errorBox = $('#error');
-const resultsSection = $('#results');
-const resultsSummary = $('#results-summary');
-const resultsMeta = $('#results-meta');
-const truncatedNote = $('#truncated-note');
-const resultsBody = $('#results-body');
-const resultsTable = $('#results-table');
+const form = document.querySelector('#lookup-form');
+const versionSelect = document.querySelector('#version');
+const queryInput = document.querySelector('#query');
+const baseUrlInput = document.querySelector('#base-url');
+const matchModeSelect = document.querySelector('#match-mode');
+const maxResultsInput = document.querySelector('#max-results');
+const lookupButton = document.querySelector('#lookup-button');
+const clearCacheButton = document.querySelector('#clear-cache');
+const progressArea = document.querySelector('#progress-area');
+const progressEl = document.querySelector('#progress');
+const progressText = document.querySelector('#progress-text');
+const errorBox = document.querySelector('#error');
+const resultsSection = document.querySelector('#results');
+const resultsSummary = document.querySelector('#results-summary');
+const resultsMeta = document.querySelector('#results-meta');
+const truncatedNote = document.querySelector('#truncated-note');
+const resultsBody = document.querySelector('#results-body');
+const resultsTable = document.querySelector('#results-table');
 
 /* ---------- cache ---------- */
 
