@@ -47,3 +47,15 @@ Two tools with a nice interface is still better than manually dealing with multi
 migrateMappings is designed to migrate an entire codebase at once. Bogged serves a different purpose: quick, ad-hoc and efficient lookup.
 
 There are workloads where Bogged would make more sense, such as checking one or two mappings during an audit or to prove a point. migrateMappings just isn't built for that.
+
+## Experimental: full data
+
+In case the curated versions built by GitHub every push don't suit your needs, an experimental and best-effort bucket can be used containing the data for every possible version.
+
+They are hosted using slower technology and can break at any time.
+
+Simply set your base URL to this:
+
+```
+https://huggingface.co/buckets/qikp/bogged-all-mojmap/resolve
+```
