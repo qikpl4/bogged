@@ -8,6 +8,7 @@ import logging
 import subprocess
 import sys
 from pathlib import Path
+import random
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -143,6 +144,7 @@ def main() -> int:
     else:
         versions = requested_versions
 
+    random.Random(67).shuffle(versions)
     build_binary(args.output, sides, args.intermediary_repo, args.yarn_repo, args.mojmap_dir, versions, jobs=args.jobs)
     return 0
 
