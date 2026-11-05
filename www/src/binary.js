@@ -52,28 +52,23 @@ export function lowerBound(entries, query) {
   return lo;
 }
 
-export function searchEntries(entries, query, mode, limit) {
+export function searchEntries(entries, query, mode) {
   const matches = [];
   if (mode === 'exact') {
     for (let i = lowerBound(entries, query); i < entries.length && entries[i].name === query; i += 1) {
       matches.push(entries[i]);
-      if (matches.length >= limit) break;
     }
     return matches;
   }
   if (mode === 'prefix') {
     for (let i = lowerBound(entries, query); i < entries.length && entries[i].name.startsWith(query); i += 1) {
       matches.push(entries[i]);
-      if (matches.length >= limit) break;
     }
     return matches;
   }
   const needle = query.toLowerCase(); // contains is case-insensitive
   for (const entry of entries) {
-    if (entry.name.toLowerCase().includes(needle)) {
-      matches.push(entry);
-      if (matches.length >= limit) break;
-    }
+    if (entry.name.toLowerCase().includes(needle)) matches.push(entry);
   }
   return matches;
 }

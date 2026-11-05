@@ -1,5 +1,5 @@
 import { decodeRecord, readMatchList, searchEntries, sidesFromMask } from './binary.js';
-import { form, lookupButton, maxResultsInput, matchModeSelect, queryInput, resultsMeta, resultsSection, versionSelect } from './dom.js';
+import { form, lookupButton, matchModeSelect, queryInput, resultsMeta, resultsSection, versionSelect } from './dom.js';
 import { formatBytes } from './format.js';
 import { fetchStats, loadBatch, loadIndex, resetFetchStats } from './loader.js';
 import { batchFile, indexFile } from './paths.js';
@@ -10,11 +10,6 @@ function currentSide() {
   return form.elements.side.value;
 }
 
-function maxResults() {
-  const value = Number.parseInt(maxResultsInput.value, 10);
-  return Number.isFinite(value) ? Math.min(Math.max(value, 1), 1000) : 100;
-}
-
 export async function lookup() {
   hideError();
   const side = currentSide();
@@ -23,7 +18,6 @@ export async function lookup() {
   if (!version || !query) return;
 
   const mode = matchModeSelect.value;
-  const limit = maxResults();
   resetFetchStats();
   lookupButton.disabled = true;
   const started = performance.now();
@@ -32,7 +26,7 @@ export async function lookup() {
   showProgress(1, null, `Fetching ${indexFile(side)}…`);
   try {
     const index = await loadIndex(version, side);
-    const matches = searchEntries(index.entries, query, mode, limit);
+    const matches = searchEntries(index.entries, query, mode);
     const wantedChunks = [...new Set(matches.map((match) => match.chunk))].sort((a, b) => a - b);
 
     // Phase 2: only the batch files that hold matches.
@@ -49,22 +43,19 @@ export async function lookup() {
       showProgress(totalSteps, 1 + chunksDone, `Fetching ${batchFile(chunk)}… (${chunksDone}/${wantedChunks.length})`);
     }));
 
-    // Phase 3: decode records (entirely local).
+    // Phase 3: decode all matching records (entirely local).
     const sides = sidesFromMask(index.mask);
     const rows = [];
-    let truncated = false;
     for (const match of matches) {
       const data = batches.get(match.chunk);
       for (const recordOffset of readMatchList(data, match.offset)) {
         rows.push(decodeRecord(data, recordOffset, sides));
-        if (rows.length >= limit) { truncated = true; break; }
       }
-      if (truncated) break;
     }
 
     const stats = fetchStats();
     hideProgress();
-    renderResults(rows, { side, version, query, truncated, mode });
+    renderResults(rows, { side, version, query, mode });
     const elapsed = Math.round(performance.now() - started);
     const parts = [`${stats.filesFetched} ${stats.filesFetched === 1 ? 'file' : 'files'} fetched (${formatBytes(stats.bytesFetched)} over the wire)`];
     if (stats.cacheHits) parts.push(`${stats.cacheHits} served from memory`);

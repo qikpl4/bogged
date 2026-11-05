@@ -1,5 +1,5 @@
 import { SIDE_ORDER } from './constants.js';
-import { resultsBody, resultsSection, resultsSummary, resultsTable, truncatedNote } from './dom.js';
+import { resultsBody, resultsSection, resultsSummary, resultsTable } from './dom.js';
 
 function cellForSide(record, side) {
   const td = document.createElement('td');
@@ -25,14 +25,10 @@ function cellForSide(record, side) {
   return td;
 }
 
-export function renderResults(rows, { side, version, query, truncated, mode }) {
+export function renderResults(rows, { side, version, query, mode }) {
   resultsSection.hidden = false;
   resultsTable.dataset.activeSide = side;
   resultsSummary.textContent = `Results (${rows.length})`;
-  truncatedNote.hidden = !truncated;
-  if (truncated) {
-    truncatedNote.textContent = `More results exist — showing the first ${rows.length} (Max results). Narrow the query or raise the limit in Settings.`;
-  }
   resultsBody.replaceChildren();
 
   if (rows.length === 0) {

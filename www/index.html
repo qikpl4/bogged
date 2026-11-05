@@ -55,9 +55,6 @@
               <option value="contains">Contains</option>
             </select>
           </label>
-          <label for="max-results">Max results
-            <input id="max-results" name="max-results" type="number" min="1" max="1000" step="1" value="10">
-          </label>
           <div class="settings-footer">
             <button type="button" id="clear-cache" class="secondary outline">Clear cached files</button>
           </div>
@@ -77,7 +74,6 @@
         <h2 id="results-summary">Results</h2>
         <small id="results-meta"></small>
       </div>
-      <p id="truncated-note" class="truncated-note" role="status" hidden></p>
       <div class="table-scroll" role="region" aria-label="Mapping results" tabindex="0">
         <table id="results-table">
           <thead>
