@@ -28,12 +28,18 @@ Then you can assemble the custom binary data, straight into the web folder (as o
 python scripts/builder/main.py --yarn-repo inputs/yarn --intermediary-repo inputs/intermediary --mojmap-dir inputs/mojmap --output www/public/data
 ```
 
-Lastly, you can build the web tool:
+You can then build the web tool:
 
 ```
 cd www
 npm install
 npm run build
+```
+
+Lastly, you can test the CLI.
+
+```
+python cli/main.py --base-url file://$(pwd)/www/public/data --side yarn --version 1.21.11 maintainPrecision
 ```
 
 ## Out of scope
