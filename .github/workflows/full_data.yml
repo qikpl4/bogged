@@ -1,9 +1,4 @@
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - ".github/workflows/full_data.yml"
   workflow_dispatch:
 
 jobs:
