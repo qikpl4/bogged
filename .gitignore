@@ -1,15 +1,6 @@
-/*
-
-!/README.md
-!/src
-!/scripts
-!/.gitignore
-!/www/
-!/LICENSE
+/inputs/
 
 __pycache__/
 
 versions.json
 *.bin.gz
-
-!/.github/

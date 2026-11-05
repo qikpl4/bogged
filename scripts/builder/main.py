@@ -73,6 +73,13 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Only process these versions, e.g. --versions 1.21.11 1.20.6. Comma-separated values are also accepted.",
     )
+    parser.add_argument(
+        "--jobs",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Number of versions to build in parallel. Defaults to the number of CPUs; pass 1 to build sequentially.",
+    )
     return parser.parse_args()
 
 
@@ -85,6 +92,10 @@ def main() -> int:
         requested_versions = parse_versions(args.versions)
     except ValueError as error:
         logger.error("%s", error)
+        return 2
+
+    if args.jobs is not None and args.jobs < 1:
+        logger.error("--jobs must be at least 1, got %d", args.jobs)
         return 2
 
     # Yarn links its names through intermediary, so it needs the intermediary repo too.
@@ -132,7 +143,7 @@ def main() -> int:
     else:
         versions = requested_versions
 
-    build_binary(args.output, sides, args.intermediary_repo, args.yarn_repo, args.mojmap_dir, versions)
+    build_binary(args.output, sides, args.intermediary_repo, args.yarn_repo, args.mojmap_dir, versions, jobs=args.jobs)
     return 0
 
 

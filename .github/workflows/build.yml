@@ -15,10 +15,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
-      - run: git clone https://github.com/FabricMC/yarn.git
-      - run: git clone https://github.com/FabricMC/intermediary.git
-      - run: mkdir mojmap && python scripts/download-mojmap/main.py -i scripts/download-mojmap/golden.txt mojmap
-      - run: mkdir -p www/public/data && python src/main.py --yarn-repo yarn --intermediary-repo intermediary --mojmap-dir mojmap --output www/public/data
+      - run: mkdir -p inputs/mojmap www/public/data
+      - run: git clone https://github.com/FabricMC/yarn.git inputs/yarn
+      - run: git clone https://github.com/FabricMC/intermediary.git inputs/intermediary
+      - run: python scripts/download-mojmap/main.py -i scripts/download-mojmap/golden.txt inputs/mojmap
+      - run: python scripts/builder/main.py --yarn-repo inputs/yarn --intermediary-repo inputs/intermediary --mojmap-dir inputs/mojmap --output www/public/data
       - run: cd www && npm ci && npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
