@@ -12,7 +12,6 @@ from .descriptor import DescriptorError, field_descriptor, method_descriptor
 logger = logging.getLogger(__name__)
 
 ClassLine = re.compile(r"^(?P<source>[^\s:][^:]*) -> (?P<target>[^:]+):$")
-MemberPrefix = re.compile(r"^\s+(?:\d+:\d+:)?")
 FieldMember = re.compile(
     r"^\s+(?:\d+:\d+:)?(?P<type>[^\s()]+)\s+(?P<name>[^\s()]+)\s+->\s+(?P<target>\S+)$"
 )

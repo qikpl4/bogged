@@ -38,7 +38,6 @@ INDEX_FILE = "index_{}.bin.gz"
 BATCH_FILE = "batch_{:03d}.bin.gz"
 
 KIND_CODES = {"class": 0, "field": 1, "method": 2}
-KIND_NAMES = {code: kind for kind, code in KIND_CODES.items()}
 
 
 def side_mask(sides: frozenset[str] | set[str]) -> int:
@@ -49,10 +48,6 @@ def side_mask(sides: frozenset[str] | set[str]) -> int:
     for side in sides:
         mask |= SIDE_BITS[side]
     return mask
-
-
-def sides_from_mask(mask: int) -> tuple[str, ...]:
-    return tuple(side for side in SIDE_ORDER if mask & SIDE_BITS[side])
 
 
 def gzip_bytes(data: bytes) -> bytes:

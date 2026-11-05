@@ -23,8 +23,6 @@ class ClassEntry:
     """Official/intermediary class name (full, slash-separated)."""
     mapped_name: str | None
     """Yarn class name, or None when the class has no yarn name."""
-    source_simple: str
-    mapped_simple: str | None
 
 
 @dataclass(frozen=True)
@@ -47,15 +45,12 @@ class MemberEntry:
 class YarnMapping:
     classes: tuple[ClassEntry, ...]
     members: tuple[MemberEntry, ...]
-    ref: str
 
 
 @dataclass
 class _ClassFrame:
     source_full: str
     target_full: str | None
-    source_simple: str
-    target_simple: str | None
 
 
 def _identity(name: str) -> str:
@@ -106,10 +101,10 @@ def parse_yarn_text(text: str, origin: str = "<yarn>") -> tuple[list[ClassEntry]
                 target_full = None
             else:
                 target_full = _joined(parent.target_full, target_simple)
-            frame = _ClassFrame(source_full, target_full, source_simple, target_simple)
+            frame = _ClassFrame(source_full, target_full)
             del stack[depth:]
             stack.append(frame)
-            classes.append(ClassEntry(source_full, target_full, source_simple, target_simple))
+            classes.append(ClassEntry(source_full, target_full))
             continue
 
         if directive in ("FIELD", "METHOD"):
@@ -215,4 +210,4 @@ def parse_yarn_repository(repository: str | Path, version: str) -> YarnMapping:
     if returncode != 0:
         raise YarnParseError(f"git archive failed for {ref} in {repo}: {stderr.strip()}")
 
-    return YarnMapping(classes=tuple(classes), members=tuple(members), ref=ref)
+    return YarnMapping(classes=tuple(classes), members=tuple(members))
