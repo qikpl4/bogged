@@ -35,3 +35,9 @@ cd www
 npm install
 npm run build
 ```
+
+## Out of scope
+
+Notably, something out of scope for this project is storing obfuscated names. These can already be obtained trivially through Intermediary, and writing a separate tool to convert between obfuscated and Intermediary is a better choice.
+
+Two tools with a nice interface is still better than manually dealing with multiple text files.
