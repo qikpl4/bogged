@@ -4,7 +4,8 @@ Bogged is a framework for dealing with Minecraft mapping triplets. A few things 
 
 - a reasonably fast bulk Mojmap downloader ([src](scripts/download-mojmap))
 - a custom binary format for compact and efficient Minecraft mapping conversion ([docs](docs/format.md))
-- an easy to use tool for comparing and converting Minecraft mappings ([try](https://qikpl4.github.io/bogged/))
+- an easy to use web tool for comparing and converting Minecraft mappings ([try](https://qikpl4.github.io/bogged/))
+- same but as a CLI ([src](cli))
 
 ## Full pipeline
 
