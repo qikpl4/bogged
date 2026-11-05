@@ -21,7 +21,7 @@ jobs:
       - run: mkdir -p inputs/mojmap www/public/data
       - run: git clone https://github.com/FabricMC/yarn.git inputs/yarn
       - run: git clone https://github.com/FabricMC/intermediary.git inputs/intermediary
-      - run: python scripts/download-mojmap/main.py -i scripts/download-mojmap/all-mojmap.txt inputs/mojmap
+      - run: python scripts/download-mojmap/main.py -i scripts/download-mojmap/all_mojmap.txt inputs/mojmap
       - run: python scripts/builder/main.py --yarn-repo inputs/yarn --intermediary-repo inputs/intermediary --mojmap-dir inputs/mojmap --output data
       - run: hf buckets sync ./data hf://buckets/qikp/bogged-all-mojmap --delete
         env:
