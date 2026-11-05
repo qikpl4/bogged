@@ -2,6 +2,10 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - .github/workflows/full_data.yml
+      - *.md
+  workflow_dispatch:
 
 jobs:
   build:
